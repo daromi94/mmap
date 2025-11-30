@@ -1,0 +1,26 @@
+version: "3"
+
+vars:
+  CC_FLAGS: -std=c23 -Wall -Wextra -Wpedantic
+  BUILD_DIR: build
+
+tasks:
+  default:
+    cmd: task -a
+
+  clean:
+    cmd: rm -rf {{.BUILD_DIR}}
+
+  example-1:build:
+    vars:
+      EXECUTABLE: example-1
+    cmds:
+      - test -d {{.BUILD_DIR}} || mkdir {{.BUILD_DIR}}
+      - gcc {{.CC_FLAGS}} -o {{.BUILD_DIR}}/{{.EXECUTABLE}} src/example-1.c
+
+  example-1:run:
+    deps:
+      - example-1:build
+    vars:
+      EXECUTABLE: example-1
+    cmd: ./{{.BUILD_DIR}}/{{.EXECUTABLE}}
