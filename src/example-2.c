@@ -8,13 +8,11 @@
 
 int main(void)
 {
-    int saved_errno;
-
     // Small allocation (likely brk)
     void *p1 = malloc(SMALL_ALLOC_SIZE);
     if (!p1)
     {
-        saved_errno = errno;
+        int saved_errno = errno;
         fprintf(stderr, "malloc p1 failed: %s (errno=%d)\n", strerror(saved_errno), saved_errno);
         goto error_exit;
     }
@@ -24,7 +22,7 @@ int main(void)
     void *p2 = malloc(LARGE_ALLOC_SIZE);
     if (!p2)
     {
-        saved_errno = errno;
+        int saved_errno = errno;
         fprintf(stderr, "malloc p2 failed: %s (errno=%d)\n", strerror(saved_errno), saved_errno);
         goto cleanup_p1;
     }
