@@ -29,7 +29,6 @@ int main(void)
         fprintf(stderr, "mmap chunk failed: %s (errno=%d)\n", strerror(saved_errno), saved_errno);
         return EXIT_FAILURE;
     }
-
     printf("Chunk allocated at: %p (%zu bytes)\n", chunk, CHUNK_SIZE);
 
     // Free chunk
