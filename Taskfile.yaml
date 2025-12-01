@@ -24,3 +24,17 @@ tasks:
     vars:
       EXECUTABLE: example-1
     cmd: ./{{.BUILD_DIR}}/{{.EXECUTABLE}}
+
+  example-2:build:
+    vars:
+      EXECUTABLE: example-2
+    cmds:
+      - test -d {{.BUILD_DIR}} || mkdir {{.BUILD_DIR}}
+      - gcc {{.CC_FLAGS}} -o {{.BUILD_DIR}}/{{.EXECUTABLE}} src/example-2.c
+
+  example-2:run:
+    deps:
+      - example-2:build
+    vars:
+      EXECUTABLE: example-2
+    cmd: ./{{.BUILD_DIR}}/{{.EXECUTABLE}}
