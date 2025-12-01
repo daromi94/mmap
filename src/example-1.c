@@ -16,6 +16,8 @@ int main(void)
     // - MAP_PRIVATE: Copy-on-write (changes not shared to other processes)
     const int flags = MAP_ANONYMOUS | MAP_PRIVATE;
 
+    // File Descriptor:
+    // -1 explicitly tells the kernel there is no physical file to map
     const int fd = -1;
     const off_t offset = 0;
 
