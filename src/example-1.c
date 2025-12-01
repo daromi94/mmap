@@ -3,7 +3,7 @@
 #include <errno.h>
 #include <sys/mman.h>
 
-#define MAPPING_LENGTH (640 * 1024)
+#define CHUNK_SIZE (200 * 1024)
 
 int main(void)
 {
@@ -15,19 +15,19 @@ int main(void)
     // - MAP_PRIVATE: Copy-on-write (changes not shared to other processes)
     int flags = MAP_ANONYMOUS | MAP_PRIVATE;
 
-    // Allocation
-    void *chunk = mmap(NULL, MAPPING_LENGTH, protections, flags, -1, 0);
+    // Allocate chunk
+    void *chunk = mmap(NULL, CHUNK_SIZE, protections, flags, -1, 0);
     if (chunk == MAP_FAILED)
     {
         perror("mmap failed");
         fprintf(stderr, "Error code: %d\n", errno);
-        exit(EXIT_FAILURE);
+        return EXIT_FAILURE;
     }
 
-    printf("Memory allocated at: %p\n", chunk);
+    printf("Chunk allocated at: %p\n", chunk);
 
-    // Deallocation
-    if (munmap(chunk, MAPPING_LENGTH) == -1)
+    // Deallocate chunk
+    if (munmap(chunk, CHUNK_SIZE) == -1)
     {
         perror("munmap failed");
         fprintf(stderr, "Error code: %d\n", errno);
